@@ -2,40 +2,73 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Countdown</title>
+<title>Countdown CC</title>
 
 <style>
+:root{
+  --green:#1aff00;
+  --red:#ff1a1a;
+  --blue:#1e40af;
+  --dark:#020617;
+}
+
+*{box-sizing:border-box}
+
 body{
   margin:0;
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#0f172a;
-  font-family:Arial, sans-serif;
+  background:radial-gradient(circle at top, #020617, #000);
+  font-family:'Segoe UI', Arial, sans-serif;
+  color:white;
+}
+
+.container{
+  text-align:center;
+}
+
+h1{
+  letter-spacing:2px;
+  margin-bottom:40px;
+  color:var(--blue);
 }
 
 .countdown{
   display:flex;
-  gap:20px;
+  gap:25px;
 }
 
 .box{
-  background:#1e293b;
-  color:white;
-  padding:20px;
-  width:90px;
-  text-align:center;
-  border-radius:10px;
+  width:120px;
+  padding:25px 15px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  box-shadow:
+    0 0 20px rgba(26,255,0,0.25),
+    inset 0 0 10px rgba(255,26,26,0.15);
 }
 
 .number{
-  font-size:32px;
+  font-size:40px;
   font-weight:bold;
+  color:var(--green);
+  text-shadow:0 0 15px var(--green);
 }
 
 .label{
-  font-size:12px;
+  margin-top:8px;
+  font-size:13px;
+  letter-spacing:1px;
+  color:#cbd5f5;
+}
+
+.footer{
+  margin-top:40px;
+  font-size:14px;
   color:#94a3b8;
 }
 </style>
@@ -43,24 +76,55 @@ body{
 
 <body>
 
-<div class="countdown">
-  <div class="box">
-    <div class="number">10</div>
-    <div class="label">JOURS</div>
+<div class="container">
+  <h1>CONTRÔLE CONTINU</h1>
+
+  <div class="countdown">
+    <div class="box">
+      <div class="number" id="days">13</div>
+      <div class="label">JOURS</div>
+    </div>
+    <div class="box">
+      <div class="number" id="hours">00</div>
+      <div class="label">HEURES</div>
+    </div>
+    <div class="box">
+      <div class="number" id="minutes">00</div>
+      <div class="label">MIN</div>
+    </div>
+    <div class="box">
+      <div class="number" id="seconds">00</div>
+      <div class="label">SEC</div>
+    </div>
   </div>
-  <div class="box">
-    <div class="number">05</div>
-    <div class="label">HEURES</div>
-  </div>
-  <div class="box">
-    <div class="number">32</div>
-    <div class="label">MIN</div>
-  </div>
-  <div class="box">
-    <div class="number">18</div>
-    <div class="label">SEC</div>
+
+  <div class="footer">
+    Université de Djibouti • Stay Focused
   </div>
 </div>
+
+<script>
+const targetDate = new Date();
+targetDate.setDate(targetDate.getDate() + 13);
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = targetDate - now;
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  days.textContent = d;
+  hours.textContent = h.toString().padStart(2,'0');
+  minutes.textContent = m.toString().padStart(2,'0');
+  seconds.textContent = s.toString().padStart(2,'0');
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
+</script>
 
 </body>
 </html>
